@@ -259,11 +259,11 @@ function MapHeadDesc(props) {
     var renderContent = React.useCallback(function () {
         return (React.createElement(React.Fragment, null,
             expectable &&
-                React.createElement("div", { onClick: toggleExpect, style: expectStyle },
+                React.createElement("div", { className: 'lineDesc', onClick: toggleExpect, style: expectStyle },
                     "\u9884\u4F30\u8DEF\u7EBF\uFF1A",
                     React.createElement("span", { style: { backgroundColor: expectColor } })),
             trajectoryable &&
-                React.createElement("div", { onClick: toggleTrajectory, style: trajectoryStyle },
+                React.createElement("div", { className: 'lineDesc', onClick: toggleTrajectory, style: trajectoryStyle },
                     "\u8F68\u8FF9\u8DEF\u7EBF\uFF1A",
                     React.createElement("span", { style: { backgroundColor: trajectoryColo } }))));
     }, [_expectShowable, _trajectoryShowable]);
@@ -310,10 +310,5 @@ function BMap(props) {
         React.createElement("div", { id: 'container', style: style })));
 }
 
-var index = (function (props) {
-    var configs = props.configs || baseConfig;
-    return (React.createElement(BMap, { configs: configs }));
-});
-
-exports.default = index;
+exports.default = BMap;
 //# sourceMappingURL=index.js.map

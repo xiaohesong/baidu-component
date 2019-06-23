@@ -2,6 +2,8 @@ import * as React from 'react';
 import { defaultExpectColor, defaultTrajectoryColor } from './constants';
 import { IBMapProps } from './';
 
+import './index.css';
+
 const disabledColor = 'rgba(0,0,0,0.25)'
 
 interface MapHeadDesc extends IBMapProps {
@@ -51,13 +53,13 @@ function MapHeadDesc(props: MapHeadDesc) {
       <>
         {
           expectable &&
-          <div onClick={toggleExpect} style={expectStyle}>
+          <div className='lineDesc' onClick={toggleExpect} style={expectStyle}>
             预估路线：<span style={{ backgroundColor: expectColor }}></span>
           </div>
         }
         {
           trajectoryable &&
-          <div  onClick={toggleTrajectory} style={trajectoryStyle}>
+          <div className='lineDesc' onClick={toggleTrajectory} style={trajectoryStyle}>
             轨迹路线：<span style={{ backgroundColor: trajectoryColo }}></span>
           </div>
         }
