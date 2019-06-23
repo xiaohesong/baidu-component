@@ -44,49 +44,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import * as React from 'react';
-import { drawMap } from './Map';
-import { init } from './init';
-import HeadDesc from './HeadDesc';
-import { baseConfig } from './interface.base';
-var map;
-function BMap(props) {
-    var _this = this;
-    var configs = props.configs || baseConfig;
-    var defaultExpectShowable = configs.expect.showable !== false;
-    var defaultTrajectoryShowable = configs.trajectory.showable !== false;
-    var _a = React.useState(defaultExpectShowable), expectShowable = _a[0], setExpectShowable = _a[1];
-    var _b = React.useState(defaultTrajectoryShowable), trajectoryShowable = _b[0], setTrajectoryShowable = _b[1];
-    React.useMemo(function () { return __awaiter(_this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            map = init();
+import { handleDraw } from './draw';
+var EXPECT_TYPE = 'expect';
+var TRAJECTORY_TYPE = 'trajectory';
+export function drawMap(props) {
+    return __awaiter(this, void 0, void 0, function () {
+        var map, trajectoryShowable, expectShowable, configs, _expectable, _trajectoryable, _expectable_, _trajectoryable_, expectable, trajectoryable, centerPosition, point, draw;
+        var _a;
+        return __generator(this, function (_b) {
+            map = props.map, trajectoryShowable = props.trajectoryShowable, expectShowable = props.expectShowable, configs = props.configs;
+            _expectable = props.configs.expect.able;
+            _trajectoryable = props.configs.trajectory.able;
+            _expectable_ = _expectable !== false;
+            _trajectoryable_ = _trajectoryable !== false;
+            expectable = _expectable_ && expectShowable;
+            trajectoryable = _trajectoryable_ && trajectoryShowable;
+            centerPosition = configs.center ? configs.center : configs.expect.line[0];
+            point = new ((_a = window.BMap.Point).bind.apply(_a, [void 0].concat(centerPosition)))();
+            map.centerAndZoom(point, 15);
+            map.clearOverlays();
+            draw = handleDraw(__assign({}, props, { map: map, expectShowable: expectShowable, trajectoryShowable: trajectoryShowable }));
+            if (expectable)
+                draw.expecter(EXPECT_TYPE);
+            if (trajectoryable)
+                draw.trajectorier(TRAJECTORY_TYPE);
             return [2 /*return*/];
         });
-    }); }, []);
-    // clear side effect when leave
-    React.useEffect(function () {
-        return function () {
-            delete window.mapLoader;
-            delete window.BMap;
-            map = null;
-        };
-    }, []);
-    React.useEffect(function () {
-        map.then(function (_map) {
-            drawMap(__assign({}, props, { map: _map, expectShowable: expectShowable, trajectoryShowable: trajectoryShowable }));
-        });
-    }, [expectShowable, trajectoryShowable]);
-    var style = props.style || { width: 500, height: 300 };
-    function toggleExpect() {
-        setExpectShowable(function (showable) { return !showable; });
-    }
-    function toggleTrajectory() {
-        setTrajectoryShowable(function (showable) { return !showable; });
-    }
-    configs = __assign({}, configs, { expect: __assign({}, configs.expect, { showable: expectShowable }), trajectory: __assign({}, configs.trajectory, { showable: trajectoryShowable }) });
-    return (React.createElement(React.Fragment, null,
-        React.createElement(HeadDesc, __assign({}, props, { configs: configs, toggleExpect: toggleExpect, toggleTrajectory: toggleTrajectory })),
-        React.createElement("div", { id: 'container', style: style })));
+    });
 }
-export default BMap;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=Map.js.map

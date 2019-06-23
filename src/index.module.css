@@ -1,0 +1,18 @@
+.lineDesc {
+  display: inline-block;
+  padding-right: 3.125rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.lineDesc span {
+  display: inline-block;
+  position: relative;
+  bottom: 4px;
+  width: 100px;
+  height: 2px;
+  margin: 0 auto;
+  padding: 0;
+  background-color: #D5D5D5;
+  overflow: hidden;
+}

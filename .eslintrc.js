@@ -6,7 +6,7 @@
 module.exports = {
   root: true,
 
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
 
   plugins: ['import', 'jsx-a11y', 'react', '@typescript-eslint', 'react-hooks'],
 
@@ -34,7 +34,6 @@ module.exports = {
 
   overrides: [{
     files: ['*.ts', '*.tsx'],
-    parser: '@typescript-eslint/parser',
     rules: {
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', {
