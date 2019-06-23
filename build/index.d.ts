@@ -1,9 +1,7 @@
 /// <reference types="react" />
-import { IConfigs } from './interface.base';
-export interface IBMapProps {
-    style?: any;
-    children?: JSX.Element[] | JSX.Element;
+import { IConfigs } from './src/interface.base';
+interface IProps {
     configs: IConfigs;
 }
-declare function BMap(props: IBMapProps): JSX.Element;
-export default BMap;
+declare const _default: (props: IProps) => JSX.Element;
+export default _default;

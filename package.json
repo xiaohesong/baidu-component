@@ -10,6 +10,9 @@
     "pretsc": "rm -rf build",
     "tsc": "tsc"
   },
+  "files": [
+    "build"
+  ],
   "author": "xiaohesong",
   "license": "ISC",
   "peerDependencies": {
@@ -33,9 +36,5 @@
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-typescript2": "^0.21.2",
     "typescript": "^3.5.2"
-  },
-  "dependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
   }
 }
