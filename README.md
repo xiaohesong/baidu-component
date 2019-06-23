@@ -130,6 +130,15 @@ export let baseConfig = {
 
 所以本文开头部分的一大截配置，真正需要的 只有 line 和 points 。
 
+## Feature
+
+- [x] polyline
+- [x] toggle
+- [x] custom point icon
+- [x] custom point
+- [x] custom polyline(color, width, ...)
+- [ ] default point icon
+- [ ] use own `ak`
 
 ## Author
 
