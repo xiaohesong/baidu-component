@@ -1,8 +1,9 @@
 import typescript from "rollup-plugin-typescript2";
 import commonjs from "rollup-plugin-commonjs";
-import external from "rollup-plugin-peer-deps-external";
 import resolve from "rollup-plugin-node-resolve";
 import postcss from 'rollup-plugin-postcss'
+import { terser } from 'rollup-plugin-terser'
+import babel from 'rollup-plugin-babel';
 
 import pkg from "./package.json";
 
@@ -12,14 +13,19 @@ export default {
       file: pkg.main,
       format: "cjs",
       exports: "named",
-      sourcemap: true
     }
   ],
+  external: Object.keys(pkg.peerDependencies),
   plugins: [
-    external(),
     resolve(),
     postcss({
-      extract: true
+      extensions: ['.css'],
+      getExportNamed: false,
+      // extract: 'build/styles.css',
+    }),
+    babel({
+      exclude: 'node_modules/**',
+      runtimeHelpers: true
     }),
     typescript({
       rollupCommonJSResolveHack: true,
@@ -36,6 +42,14 @@ export default {
           "createElement"
         ],
         "node_modules/react-dom/index.js": ["render"]
+      }
+    }),
+    terser({
+      compress: {
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        warnings: false
       }
     })
   ]
