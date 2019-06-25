@@ -4,7 +4,7 @@ import {
   defaultStrokeWeight,
   defaultStrokeOpacity
 } from './constants';
-import { IConfigs, pointsIcon } from './interface.base';
+import { IConfigs, pointsIcon as defaultPoints } from './interface.base';
 
 interface IColorDesc {
   expect: string,
@@ -33,15 +33,30 @@ export function handleDraw({
   map,
   configs,
 }: IHandleDrawParams) {
+  const infoWindowable = configs.infoWindow ? configs.infoWindow.able !== false : true
+
+  function infoShow(marker: any, defaultItem: any) {
+    const point = marker.getPosition();
+    const { dateTime: time = '', title } = defaultItem
+    let infoWindow = new window.BMap.InfoWindow(`<div>
+      <p class='mb2'>地址：杭州市西湖区！</p>
+      <p class='mb2'><span class='pr10'>经度:</span><span>${point.lng}</span></p>
+      <p class='mb2'><span class='pr10'>维度:</span><span>${point.lat}</span></p>
+      ${time && `<p class='mb2'><span class='pr10'>时间:</span><span>${time}</span></p>`}
+    </div>`, { ...configs.infoWindow, title });  // 创建信息窗口对象 
+    marker.openInfoWindow(infoWindow)
+  }
 
   function addMarker(points: any) {
     const keys = Object.keys(points)
     keys.forEach((key: string) => {
-      const { point, icon } = points[key]
-
-      const cIcon = new window.BMap.Icon(icon || pointsIcon[key], new window.BMap.Size(23, 25), {})
+      const { point, icon, dateTime: time, desc: title } = points[key]
+      let defaultItem = defaultPoints[key]
+      defaultItem = { ...defaultItem, dateTime: time, title }
+      const cIcon = new window.BMap.Icon(icon || defaultPoints[key], new window.BMap.Size(23, 25), {})
       const cPoint = new window.BMap.Point(point.shift(), point.pop())
       const marker = new window.BMap.Marker(cPoint, { icon: cIcon });
+      infoWindowable && marker.addEventListener("click", () => infoShow(marker, defaultItem));
       map.addOverlay(marker);
     })
   }
