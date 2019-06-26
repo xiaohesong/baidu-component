@@ -10,7 +10,7 @@ type IPoints = {
 export type IConfigs = {
   center?: number[],
   headerable?: boolean
-  expect: {
+  expect?: {
     able?: boolean,
     showable?: boolean,
     strokeColor?: string,
@@ -19,7 +19,7 @@ export type IConfigs = {
     line?: any,
     points?: IPoints
   },
-  trajectory: {
+  trajectory?: {
     able?: boolean,
     showable?: boolean,
     strokeColor?: string,

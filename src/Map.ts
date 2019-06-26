@@ -12,15 +12,15 @@ interface IDrawProps extends IBMapProps {
 
 export async function drawMap(props: IDrawProps) {
   let { map, trajectoryShowable, expectShowable, configs } = props
-  const { able: _expectable, } = props.configs.expect
-  const { able: _trajectoryable, } = props.configs.trajectory
+  const { able: _expectable = true, } = props.configs.expect || {}
+  const { able: _trajectoryable = true, } = props.configs.trajectory || {}
 
   const _expectable_ = _expectable !== false
   const _trajectoryable_ = _trajectoryable !== false
   const expectable = _expectable_ && expectShowable
   const trajectoryable = _trajectoryable_ && trajectoryShowable
 
-  const centerPosition = configs.center ? configs.center : configs.expect.line[0]
+  const centerPosition = configs.center ? configs.center : (configs.expect && configs.expect.line[0])
   var point = new window.BMap.Point(...centerPosition);
 
   map.centerAndZoom(point, 15);

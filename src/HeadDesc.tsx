@@ -16,13 +16,13 @@ interface MapHeadDesc extends IBMapProps {
 function MapHeadDesc(props: MapHeadDesc) {
   const { 
     strokeColor: expectColor = defaultExpectColor, 
-    able: _expectable, 
-  } = props.configs.expect
+    able: _expectable = true, 
+  } = props.configs.expect || {}
 
   const { 
     strokeColor: trajectoryColo = defaultTrajectoryColor, 
-    able: _trajectoryable, 
-  } = props.configs.trajectory
+    able: _trajectoryable = true, 
+  } = props.configs.trajectory || {}
 
   const expectable = _expectable !== false
   const trajectoryable = _trajectoryable !== false
