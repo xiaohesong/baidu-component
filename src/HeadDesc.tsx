@@ -8,27 +8,26 @@ const disabledColor = 'rgba(0,0,0,0.25)'
 
 interface MapHeadDesc extends IBMapProps {
   toggleExpect: () => void,
-  toggleTrajectory: () => void
+  toggleTrajectory: () => void,
+  trajectoryShowable: boolean,
+  expectShowable: boolean
 }
 
 function MapHeadDesc(props: MapHeadDesc) {
   const { 
     strokeColor: expectColor = defaultExpectColor, 
     able: _expectable, 
-    showable: _expectShowable 
   } = props.configs.expect
 
   const { 
     strokeColor: trajectoryColo = defaultTrajectoryColor, 
     able: _trajectoryable, 
-    showable: _trajectoryShowable 
   } = props.configs.trajectory
 
   const expectable = _expectable !== false
   const trajectoryable = _trajectoryable !== false
 
-  const expectShowable = _expectShowable !== false
-  const trajectoryShowable = _trajectoryShowable !== false
+  const { expectShowable, trajectoryShowable } = props
 
   function toggleExpect() {
     expectable && props.toggleExpect()
@@ -65,7 +64,7 @@ function MapHeadDesc(props: MapHeadDesc) {
         }
       </>
     )
-  }, [_expectShowable, _trajectoryShowable])
+  }, [expectShowable, trajectoryShowable])
 
   return renderContent()
 }

@@ -52,21 +52,15 @@ function BMap(props: IBMapProps) {
     setTrajectoryShowable(showable => !showable)
   }
 
-  configs = {
-    ...configs,
-    expect: {
-      ...configs.expect,
-      showable: expectShowable
-    },
-    trajectory: {
-      ...configs.trajectory,
-      showable: trajectoryShowable
-    }
-  }
-
   return (
     <>
-      <HeadDesc {...props} configs={configs} toggleExpect={toggleExpect} toggleTrajectory={toggleTrajectory} />
+      <HeadDesc 
+        {...props} 
+        expectShowable={expectShowable}
+        trajectoryShowable={trajectoryShowable}
+        toggleExpect={toggleExpect} 
+        toggleTrajectory={toggleTrajectory} 
+      />
       <div id='container' style={style}>
 
       </div>
