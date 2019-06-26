@@ -39,7 +39,6 @@ export function handleDraw({
     const point = marker.getPosition();
     const { dateTime: time = '', title } = defaultItem
     let infoWindow = new window.BMap.InfoWindow(`<div>
-      <p class='mb2'>地址：杭州市西湖区！</p>
       <p class='mb2'><span class='pr10'>经度:</span><span>${point.lng}</span></p>
       <p class='mb2'><span class='pr10'>维度:</span><span>${point.lat}</span></p>
       ${time && `<p class='mb2'><span class='pr10'>时间:</span><span>${time}</span></p>`}
