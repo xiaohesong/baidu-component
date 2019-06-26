@@ -1,7 +1,9 @@
 type IPoints = {
   [name: string]: {
     point: any,
-    icon: any
+    icon?: any
+    dateTime?: string,
+    desc?: string,
   }
 }
 
@@ -14,8 +16,8 @@ export type IConfigs = {
     strokeColor?: string,
     strokeWeight?: number,
     strokeOpacity?: number,
-    line: any,
-    points: IPoints
+    line?: any,
+    points?: IPoints
   },
   trajectory: {
     able?: boolean,
@@ -23,8 +25,8 @@ export type IConfigs = {
     strokeColor?: string,
     strokeWeight?: number,
     strokeOpacity?: number,
-    line: any,
-    points: IPoints
+    line?: any,
+    points?: IPoints
   },
   [key: string]: any
 }
@@ -71,6 +73,26 @@ export let baseConfig = {
       passengerGetOff: { point: [120.124034, 30.279162], icon: '4', dateTime: '', desc: '乘客下车点' },
       // 订单终点(发起收款点)
       end: { point: [120.124801, 30.279167], icon: '5', dateTime: '', desc: '订单终点(发起收款)' }
+    }
+  },
+}
+
+export let fakeConfig = {
+  expect: {
+    able: false, // 是否开启预估路线
+    line: [[120.110311, 30.287103], [120.110468, 30.287115], [120.110662, 30.287127], [120.111029, 30.287139], [120.111597, 30.287249]],
+    points: {
+      // 订单起点
+      expectStart: { point: [120.110311, 30.287103] },
+    }
+  },
+  // 轨迹路线相关配置
+  trajectory: {
+    able: false, // 是否开启轨迹路线
+    
+    line: [[120.120716, 30.279077], [120.121656, 30.279089], [120.122880, 30.279125], [120.124034, 30.279162], [120.124801, 30.279167]],
+    points: {
+      end: { point: [120.124801, 30.279167] }
     }
   },
 }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { drawMap } from './Map';
 import { init } from './init';
 import HeadDesc from './HeadDesc';
-import { IConfigs, baseConfig } from './interface.base';
+import { IConfigs, baseConfig, fakeConfig } from './interface.base';
 
 export interface IBMapProps {
   style?: any,
@@ -14,6 +14,8 @@ let map: any;
 
 function BMap(props: IBMapProps) {
   let configs = props.configs || baseConfig
+  if (!configs.expect || !configs.expect.line) configs.expect = fakeConfig.expect
+  if (!configs.trajectory || !configs.trajectory.line) configs.trajectory = fakeConfig.trajectory
 
 
   const defaultExpectShowable = configs.expect.showable !== false
