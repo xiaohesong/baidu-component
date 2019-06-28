@@ -39,7 +39,7 @@ export function handleDraw({
       const { point, icon, dateTime: time, desc: title } = points[key]
       let defaultItem = defaultPoints[key]
       defaultItem = { ...defaultItem, dateTime: time, title }
-      const cIcon = new window.BMap.Icon(icon || defaultItem['icon'], new window.BMap.Size(23, 25), {})
+      const cIcon = new window.BMap.Icon(icon, new window.BMap.Size(23, 25), {})
       const cPoint = new window.BMap.Point(point.shift(), point.pop())
       const marker = new window.BMap.Marker(cPoint, { icon: cIcon });
 

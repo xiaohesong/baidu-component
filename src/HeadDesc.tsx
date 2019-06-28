@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { IBMapProps } from './';
 import './index.css';
+import { defaultColor } from './constants';
 
 const disabledColor = 'rgba(0,0,0,0.25)'
 
@@ -23,7 +24,7 @@ function MapHeadDesc(props: MapHeadDesc) {
         {
           Object.keys(lines).map((key: string) => {
             const lineable = lines[key].able !== false
-            const { desc, strokeColor} = lines[key]
+            const { desc, strokeColor = defaultColor} = lines[key]
             const showable = showables[key]
             const style = {
               color: !showable ? disabledColor : '',
