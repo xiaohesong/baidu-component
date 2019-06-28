@@ -8,12 +8,13 @@ export interface IBMapProps {
   style?: any,
   children?: JSX.Element[] | JSX.Element,
   configs: IConfigs,
+  ak: string
 }
 
 let map: any;
 
 function BMap(props: IBMapProps) {
-  let { configs } = props
+  let { configs, ak } = props
   const linesShowable = Object.keys(configs.lines).reduce((obj: any, key: string) => {
     obj[key] = configs.lines[key].showable !== false
     return obj
@@ -22,7 +23,7 @@ function BMap(props: IBMapProps) {
   const [showables, setShowables] = React.useState(linesShowable)
 
   React.useMemo(async () => {
-    map = init()
+    map = init(ak)
   }, [])
 
 

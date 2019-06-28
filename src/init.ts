@@ -8,9 +8,7 @@ declare global {
   }
 }
 
-const AK = 'olqtPciVr8PWFoKFnNWof0j0uIMukGE4'
-
-function loadScript(ak: string | undefined = AK) {
+function loadScript(ak: string) {
   if (!window.BMap && !window.mapLoader) {
     return window.mapLoader = new Promise((resolve) => {
       // changeCsp()
@@ -30,8 +28,8 @@ function loadScript(ak: string | undefined = AK) {
   return window.mapLoader;
 }
 
-export async function init() {
-  await loadScript()
+export async function init(ak: string) {
+  await loadScript(ak)
   let map = new window.BMap.Map("container");
   // 创建地图实例  
   // const point = new window.BMap.Point(...center);
