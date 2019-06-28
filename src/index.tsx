@@ -2,7 +2,7 @@ import * as React from 'react';
 import { drawMap } from './Map';
 import { init } from './init';
 import HeadDesc from './HeadDesc';
-import { IConfigs, baseConfig, fakeConfig } from './interface.base';
+import { IConfigs } from './interface.base';
 
 export interface IBMapProps {
   style?: any,
@@ -13,16 +13,13 @@ export interface IBMapProps {
 let map: any;
 
 function BMap(props: IBMapProps) {
-  let configs = props.configs || baseConfig
-  if (!configs.expect || !configs.expect.line) configs.expect = fakeConfig.expect
-  if (!configs.trajectory || !configs.trajectory.line) configs.trajectory = fakeConfig.trajectory
+  let { configs } = props
+  const linesShowable = Object.keys(configs.lines).reduce((obj: any, key: string) => {
+    obj[key] = configs.lines[key].showable !== false
+    return obj
+  }, {})
 
-
-  const defaultExpectShowable = configs.expect.showable !== false
-  const defaultTrajectoryShowable = configs.trajectory.showable !== false
-
-  const [expectShowable, setExpectShowable] = React.useState(defaultExpectShowable)
-  const [trajectoryShowable, setTrajectoryShowable] = React.useState(defaultTrajectoryShowable)
+  const [showables, setShowables] = React.useState(linesShowable)
 
   React.useMemo(async () => {
     map = init()
@@ -40,29 +37,29 @@ function BMap(props: IBMapProps) {
 
   React.useEffect(() => {
     map.then((_map: any) => {
-      drawMap({ ...props, map: _map, expectShowable, trajectoryShowable })
+      drawMap({ ...props, map: _map, showables })
     })
-  }, [expectShowable, trajectoryShowable])
+  }, [showables])
 
   const style = props.style || { width: 500, height: 300 }
 
-  function toggleExpect() {
-    setExpectShowable(showable => !showable)
+  const toggle = (key: string) => {
+    setShowables((ables: { [propName: string]: boolean }) => ({
+      ...ables,
+      [key]: !ables[key]
+    }))
   }
 
-  function toggleTrajectory() {
-    setTrajectoryShowable(showable => !showable)
-  }
+  const headable = configs.headerable !== false
+  const Header = () => headable ? <HeadDesc
+    {...props}
+    showables={showables}
+    toggle={toggle}
+  /> : null
 
   return (
     <>
-      <HeadDesc 
-        {...props} 
-        expectShowable={expectShowable}
-        trajectoryShowable={trajectoryShowable}
-        toggleExpect={toggleExpect} 
-        toggleTrajectory={toggleTrajectory} 
-      />
+      <Header />
       <div id='container' style={style}>
 
       </div>

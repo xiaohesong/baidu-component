@@ -1,70 +1,43 @@
 import * as React from 'react';
-import { defaultExpectColor, defaultTrajectoryColor } from './constants';
 import { IBMapProps } from './';
-
 import './index.css';
 
 const disabledColor = 'rgba(0,0,0,0.25)'
 
 interface MapHeadDesc extends IBMapProps {
-  toggleExpect: () => void,
-  toggleTrajectory: () => void,
-  trajectoryShowable: boolean,
-  expectShowable: boolean
+  toggle: (name: string) => void,
+  showables: { [propName: string]: boolean },
 }
 
 function MapHeadDesc(props: MapHeadDesc) {
-  const { 
-    strokeColor: expectColor = defaultExpectColor, 
-    able: _expectable = true, 
-  } = props.configs.expect || {}
-
-  const { 
-    strokeColor: trajectoryColo = defaultTrajectoryColor, 
-    able: _trajectoryable = true, 
-  } = props.configs.trajectory || {}
-
-  const expectable = _expectable !== false
-  const trajectoryable = _trajectoryable !== false
-
-  const { expectShowable, trajectoryShowable } = props
-
-  function toggleExpect() {
-    expectable && props.toggleExpect()
-  }
-
-  function toggleTrajectory() {
-    trajectoryable && props.toggleTrajectory()
-  }
-
-  const expectStyle = {
-    color: !expectShowable ? disabledColor : '', 
-    textDecoration: !expectShowable ? 'line-through' : ''
-  }
-
-  const trajectoryStyle = {
-    color: !trajectoryShowable ? disabledColor : '',
-    textDecoration: !trajectoryShowable ? 'line-through' : ''
+  
+  const { configs: { lines }, showables } = props
+  const toggle = (e: any) => {
+    const { id: lineName } = e.target
+    lineName && props.toggle(lineName)
   }
 
   const renderContent = React.useCallback(() => {
     return (
-      <>
+      <div onClick={toggle} >
         {
-          expectable &&
-          <div className='lineDesc' onClick={toggleExpect} style={expectStyle}>
-            预估路线：<span style={{ backgroundColor: expectColor }}></span>
-          </div>
+          Object.keys(lines).map((key: string) => {
+            const lineable = lines[key].able !== false
+            const { desc, strokeColor} = lines[key]
+            const showable = showables[key]
+            const style = {
+              color: !showable ? disabledColor : '',
+              textDecoration: !showable ? 'line-through' : ''
+            }
+
+            return lineable && <div id={key} key={key} className='lineDesc' style={style}>
+              {desc}：<span style={{ backgroundColor: strokeColor }}></span>
+            </div>
+          })
         }
-        {
-          trajectoryable &&
-          <div className='lineDesc' onClick={toggleTrajectory} style={trajectoryStyle}>
-            轨迹路线：<span style={{ backgroundColor: trajectoryColo }}></span>
-          </div>
-        }
-      </>
+      </div>
     )
-  }, [expectShowable, trajectoryShowable])
+  }, [showables])
 
   return renderContent()
 }

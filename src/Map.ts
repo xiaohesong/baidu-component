@@ -1,35 +1,29 @@
 import { IBMapProps } from './';
 import { handleDraw } from './draw';
 
-const EXPECT_TYPE = 'expect';
-const TRAJECTORY_TYPE = 'trajectory';
+const FIRST_POSITION = 0;
 
-interface IDrawProps extends IBMapProps {
-  trajectoryShowable: boolean,
-  expectShowable: boolean,
+interface IDrawProps extends IBMapProps{
+  showables: { [propName: string]: boolean },
   map: any
 }
 
 export async function drawMap(props: IDrawProps) {
-  let { map, trajectoryShowable, expectShowable, configs } = props
-  const { able: _expectable = true, } = props.configs.expect || {}
-  const { able: _trajectoryable = true, } = props.configs.trajectory || {}
+  let { map, showables, configs, configs: {lines}} = props
 
-  const _expectable_ = _expectable !== false
-  const _trajectoryable_ = _trajectoryable !== false
-  const expectable = _expectable_ && expectShowable
-  const trajectoryable = _trajectoryable_ && trajectoryShowable
-
-  const centerPosition = configs.center ? configs.center : (configs.expect && configs.expect.line[0])
+  const firstPosition = lines[Object.keys(lines)[FIRST_POSITION]].line[FIRST_POSITION]
+  const centerPosition = configs.center ? configs.center : firstPosition
   var point = new window.BMap.Point(...centerPosition);
-
+  
   map.centerAndZoom(point, 15);
   map.clearOverlays()
 
-  const draw = handleDraw({ ...props, map, expectShowable, trajectoryShowable })
+  const draw = handleDraw({ ...props, map, showables })
 
-  if (expectable) draw.expecter(EXPECT_TYPE);
-  if (trajectoryable) draw.trajectorier(TRAJECTORY_TYPE);
-
+  for(let key in showables){
+    const abler = showables[key] && lines[key].able !== false
+    if(abler) draw(key);
+  }
+  
 }
 

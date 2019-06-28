@@ -1,26 +1,13 @@
 import {
-  defaultExpectColor,
-  defaultTrajectoryColor,
+  defaultColor,
   defaultStrokeWeight,
   defaultStrokeOpacity
 } from './constants';
 import { IConfigs, pointsIcon as defaultPoints } from './interface.base';
 
-interface IColorDesc {
-  expect: string,
-  trajectory: string,
-  [key: string]: string
-}
-
-const colorDesc: IColorDesc = {
-  'expect': defaultExpectColor,
-  'trajectory': defaultTrajectoryColor
-}
-
 interface IHandleDrawParams {
   map: any,
-  trajectoryShowable: boolean,
-  expectShowable: boolean,
+  showables: { [propName: string]: boolean },
   configs: IConfigs
 }
 
@@ -52,9 +39,10 @@ export function handleDraw({
       const { point, icon, dateTime: time, desc: title } = points[key]
       let defaultItem = defaultPoints[key]
       defaultItem = { ...defaultItem, dateTime: time, title }
-      const cIcon = new window.BMap.Icon(icon || defaultPoints[key], new window.BMap.Size(23, 25), {})
+      const cIcon = new window.BMap.Icon(icon || defaultItem['icon'], new window.BMap.Size(23, 25), {})
       const cPoint = new window.BMap.Point(point.shift(), point.pop())
       const marker = new window.BMap.Marker(cPoint, { icon: cIcon });
+
       infoWindowable && marker.addEventListener("click", () => infoShow(marker, defaultItem));
       map.addOverlay(marker);
     })
@@ -76,30 +64,19 @@ export function handleDraw({
     map.addOverlay(polyline);
   }
 
-  function expecter(type: string) {
-    drawer(type)
-  }
-
-  function trajectorier(type: string) {
-    drawer(type)
-  }
-
   function drawer(type: string) {
     let {
-      line,
-      points,
-      strokeColor = colorDesc[type],
+      line = [],
+      points = {},
+      strokeColor = defaultColor,
       strokeWeight = defaultStrokeWeight,
       strokeOpacity = defaultStrokeOpacity
-    } = configs[type]
+    } = configs.lines[type] || {}
 
     const lineConfigs = { strokeColor, strokeWeight, strokeOpacity }
     drawPolyline(line, points, lineConfigs)
   }
 
-  return {
-    expecter,
-    trajectorier
-  }
+  return drawer
 
 }
