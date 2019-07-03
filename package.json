@@ -1,6 +1,6 @@
 {
   "name": "baidu-component",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "baidu component for react",
   "main": "build/index.js",
   "scripts": {
