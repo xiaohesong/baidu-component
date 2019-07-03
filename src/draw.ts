@@ -35,6 +35,8 @@ export function handleDraw({
 
   function addMarker(points: any) {
     const keys = Object.keys(points)
+    const { eventType = 'mouseover' } = configs 
+
     keys.forEach((key: string) => {
       const { point, icon, dateTime: time, desc: title } = points[key]
       let defaultItem = defaultPoints[key]
@@ -43,7 +45,7 @@ export function handleDraw({
       const cPoint = new window.BMap.Point(point.shift(), point.pop())
       const marker = new window.BMap.Marker(cPoint, { icon: cIcon });
 
-      infoWindowable && marker.addEventListener("click", () => infoShow(marker, defaultItem));
+      infoWindowable && marker.addEventListener(eventType, () => infoShow(marker, defaultItem));
       map.addOverlay(marker);
     })
   }

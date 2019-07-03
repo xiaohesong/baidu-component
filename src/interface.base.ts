@@ -21,6 +21,7 @@ interface ILineConfig {
 export type IConfigs = {
   center?: number[],
   headerable?: boolean
+  eventType?: string
   infoWindow?: any
   lines: {
     [key: string]: ILineConfig

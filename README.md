@@ -30,6 +30,7 @@ function Map() {
 export let baseConfig = {
   // 预估路线相关配置
   headable: true, // 地图上方的描述信息
+  eventType: 'click', // 地图上图标对应的事件
   center: [120.120716, 30.279077], // 中心点
   // 点击地图标记的弹窗
   infoWindow: {
@@ -96,6 +97,14 @@ let baseConfig = {
 - center (optional)
   
   这个是可选的，用于初次加载地图的中心店。若不配置，则将根据预估路线进行定位。
+
+- headable （optional）
+
+  这个是控制是否显示地图上方的描述信息，默认为显示，`false`为不显示。
+
+- eventType (optional)
+
+  这个是在地图上对应的标记的事件，默认为`mouseover`，可自行设置。
 
 - infoWindow (optional)
 
