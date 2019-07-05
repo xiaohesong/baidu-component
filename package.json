@@ -1,6 +1,6 @@
 {
   "name": "baidu-component",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "baidu component for react",
   "main": "build/index.js",
   "scripts": {
@@ -10,11 +10,19 @@
     "pretsc": "rm -rf build",
     "tsc": "tsc"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/xiaohesong/baidu-component.git"
+  },
   "files": [
     "build"
   ],
   "author": "xiaohesong",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiaohesong/baidu-component/issues"
+  },
+  "homepage": "https://github.com/xiaohesong/baidu-component#readme",
   "keywords": [
     "baidu map",
     "react",
